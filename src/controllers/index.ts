@@ -1,1 +1,2 @@
-export * from './User/user.controller';
+export * from "./Notes/notes.controller";
+export * from "./User/user.controller";

@@ -1,4 +1,4 @@
-import { randomUUID } from 'crypto';
+import { randomUUID } from "crypto";
 
 export abstract class BaseClass {
 	protected id: string;
@@ -6,8 +6,4 @@ export abstract class BaseClass {
 	constructor() {
 		this.id = randomUUID();
 	}
-
-	toJson() {}
 }
-
-// SUPERCLASS - não pode ser instanciada

@@ -1,4 +1,4 @@
-import { UserRepository } from '../../repositories';
+import { UserRepository } from "../../repositories";
 
 export type UserDTO = {
 	name: string;
@@ -24,7 +24,7 @@ export class CreateUser {
 		if (userExists) {
 			return {
 				success: false,
-				message: 'Usuário já cadastrado.',
+				message: "Usuário já cadastrado.",
 			};
 		}
 
@@ -32,17 +32,8 @@ export class CreateUser {
 
 		return {
 			success: true,
-			message: 'Usuário cadastrado com sucesso',
+			message: "Usuário cadastrado com sucesso",
 			data: userCreated,
 		};
 	}
 }
-
-// vai existir um usecase para cada operação (vários) que a gente tiver na api e um método
-// repository => uma classe repository para cada model (real/ vai instanciar)  e varios métodos
-
-// buscaPorID
-// buscaporEmail
-// cadastra
-// atualiza
-// deleta
