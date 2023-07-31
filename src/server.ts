@@ -3,7 +3,12 @@ import "dotenv/config";
 import express from "express";
 import { NotesController, UserController } from "./controllers";
 
-import { validateDataUser, validateUserLogin } from "./middlewares";
+import {
+	validateDataNote,
+	validateDataUser,
+	validateUserIsLogged,
+	validateUserLogin,
+} from "./middlewares";
 
 const app = express();
 
@@ -26,4 +31,10 @@ app.post("/users/signin", validateUserLogin, userController.signin);
 // CRUD
 const notesController = new NotesController();
 
-app.post("/notes/:userId/create", notesController.create);
+app.get("/notes", validateUserIsLogged, notesController.list);
+app.post(
+	"/notes",
+	validateUserIsLogged,
+	validateDataNote,
+	notesController.create
+);

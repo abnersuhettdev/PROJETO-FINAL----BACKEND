@@ -14,7 +14,6 @@ export type RetornoCreate = {
 
 export class CreateUser {
 	execute(dados: UserDTO): RetornoCreate {
-		// REGRA - não pode existir dois user com o mesmo e-mail
 		const repository = new UserRepository();
 
 		const userExists = repository

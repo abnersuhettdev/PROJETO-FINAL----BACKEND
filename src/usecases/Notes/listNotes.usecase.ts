@@ -1,28 +1,22 @@
 import { Note } from "../../models";
 import { NotesRepository } from "../../repositories/Notes/notes.repository";
 
-export type CreateNoteDTO = {
-	title: string;
-	description: string | undefined;
-	authorId: string;
-};
-
-type RetornoCreate = {
+type RetornoListNote = {
 	success: boolean;
 	message: string;
-	data?: Note;
+	data?: Note[];
 };
 
-export class CreateNote {
-	execute(dados: CreateNoteDTO): RetornoCreate {
+export class ListNotes {
+	execute(authorId: string): RetornoListNote {
 		const repository = new NotesRepository();
 
-		const newNote = repository.createNote(dados);
+		const authorList = repository.listNotes(authorId);
 
 		return {
 			success: true,
 			message: "Nota cadastrada com sucesso",
-			data: newNote,
+			data: authorList,
 		};
 	}
 }

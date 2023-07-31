@@ -1,35 +1,22 @@
 import { databaseNotes } from "../../database";
 import { Note } from "../../models";
-import { NoteDTO } from "../../usecases";
+import { CreateNoteDTO } from "../../usecases";
 
 export class NotesRepository {
-	listNotes() {
+	listNotes(authorId: string) {
 		const notes: Note[] = databaseNotes;
+		const authorNotes = notes.filter(
+			(note) => note.toJson().authorId === authorId
+		);
 
-		return notes.map((note) => note.toJson());
+		return authorNotes;
 	}
 
-	createNote(dados: NoteDTO) {
-		const note = new Note(
-			dados.title,
-			dados.description,
-			dados.author,
-			dados.arquived
-		);
+	createNote(dados: CreateNoteDTO) {
+		const note = new Note(dados.title, dados.description, dados.authorId);
 
 		databaseNotes.push(note);
 
-		return note.toJson();
+		return note;
 	}
-
-	// findUserByCredentials(dados: LoginDTO) {
-	// 	const user = databaseUsers.find(
-	// 		(i) =>
-	// 			i.toJson().email === dados.email && i.toJson().password === dados.password
-	// 	);
-
-	// 	if (!user) return;
-
-	// 	return user.toJson().id;
-	// }
 }
