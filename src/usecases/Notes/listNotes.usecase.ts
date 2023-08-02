@@ -7,11 +7,35 @@ type RetornoListNote = {
 	data?: Note[];
 };
 
+export type FilterNote = {
+	title?: string;
+	description?: string;
+	arquived?: boolean;
+};
+
 export class ListNotes {
-	execute(authorId: string): RetornoListNote {
+	execute(authorId: string, filters: FilterNote): RetornoListNote {
 		const repository = new NotesRepository();
 
-		const authorList = repository.listNotes(authorId);
+		let authorList = repository.listNotes(authorId);
+
+		if (filters?.title) {
+			authorList = authorList.filter((note) =>
+				note.toJson().title.includes(filters.title!)
+			);
+		}
+
+		if (filters?.description) {
+			authorList = authorList.filter((note) =>
+				note.toJson().description?.includes(filters.description!)
+			);
+		}
+
+		if (filters?.arquived != undefined) {
+			authorList = authorList.filter(
+				(note) => note.toJson().arquived == filters.arquived
+			);
+		}
 
 		return {
 			success: true,

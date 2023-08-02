@@ -9,6 +9,8 @@ import {
 	validateUserIsLogged,
 	validateUserLogin,
 } from "./middlewares";
+import { validateNoteParams } from "./middlewares/Notes/validateNoteExists";
+import { validateUpdateNote } from "./middlewares/Notes/validateNoteParams";
 
 const app = express();
 
@@ -31,10 +33,19 @@ app.post("/users/signin", validateUserLogin, userController.signin);
 // CRUD
 const notesController = new NotesController();
 
-app.get("/notes", validateUserIsLogged, notesController.list);
+app.get("/notes/:authorId", validateUserIsLogged, notesController.list);
+
 app.post(
-	"/notes",
+	"/notes/:authorId",
 	validateUserIsLogged,
 	validateDataNote,
 	notesController.create
+);
+
+app.put(
+	"/notes/:authorId/:noteId",
+	validateUserIsLogged,
+	validateNoteParams,
+	validateUpdateNote,
+	notesController.update
 );

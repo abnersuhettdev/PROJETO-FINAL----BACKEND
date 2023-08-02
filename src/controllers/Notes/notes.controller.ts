@@ -1,13 +1,16 @@
 import { Request, Response } from "express";
-import { CreateNote, ListNotes } from "../../usecases";
+import { CreateNote, FilterNote, ListNotes } from "../../usecases";
+import { UpdateNote } from "../../usecases/Notes/updateNote";
 
 export class NotesController {
 	list(req: Request, res: Response) {
-		const { authorId } = req.body;
+		const { authorId } = req.params;
+
+		const { title, description, arquived } = req.query as FilterNote;
 
 		const usecase = new ListNotes();
 
-		const response = usecase.execute(authorId);
+		const response = usecase.execute(authorId, { title, description, arquived });
 
 		if (!response.success) {
 			return res
@@ -30,5 +33,20 @@ export class NotesController {
 		}
 
 		return res.status(201).json({ data: response });
+	}
+
+	update(req: Request, res: Response) {
+		const { title, description } = req.body;
+		const { authorId, noteId } = req.params;
+
+		const usecase = new UpdateNote();
+
+		const response = usecase.execute({ title, description, noteId }, authorId);
+
+		if (!response.success) {
+			return res.status(400).send("Não foi possivel atualizar a nota");
+		}
+
+		res.status(200).json({ message: response.message, data: response.data });
 	}
 }

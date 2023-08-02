@@ -5,7 +5,7 @@ export function validateUserIsLogged(
 	res: Response,
 	next: NextFunction
 ) {
-	const { authorId } = req.body;
+	const { authorId } = req.params;
 
 	if (!authorId) {
 		return res.status(400).json("Nenhum usuário logado");
