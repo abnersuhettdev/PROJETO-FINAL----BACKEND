@@ -49,3 +49,17 @@ app.put(
 	validateUpdateNote,
 	notesController.update
 );
+
+app.put(
+	"/notes/arquived/:authorId/:noteId",
+	validateUserIsLogged,
+	validateNoteParams,
+	notesController.arquive
+);
+
+app.delete(
+	"/notes/:authorId/:noteId",
+	validateUserIsLogged,
+	validateNoteParams,
+	notesController.delete
+);

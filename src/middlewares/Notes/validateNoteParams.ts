@@ -12,7 +12,9 @@ export function validateUpdateNote(
 	}
 
 	if (description && description.length <= 3) {
-		return res.status(400).json("Insira no minimo 3 caracteres para atualizar");
+		return res
+			.status(400)
+			.json("Insira no minimo 3 caracteres para atualizar a descrição");
 	}
 
 	next();

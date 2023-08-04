@@ -1,5 +1,7 @@
 import { Request, Response } from "express";
 import { CreateNote, FilterNote, ListNotes } from "../../usecases";
+import { ArquiveNote } from "../../usecases/Notes/arquiveNote";
+import { DeleteNote } from "../../usecases/Notes/deleteNote";
 import { UpdateNote } from "../../usecases/Notes/updateNote";
 
 export class NotesController {
@@ -45,6 +47,34 @@ export class NotesController {
 
 		if (!response.success) {
 			return res.status(400).send("Não foi possivel atualizar a nota");
+		}
+
+		res.status(200).json({ message: response.message, data: response.data });
+	}
+
+	arquive(req: Request, res: Response) {
+		const { noteId } = req.params;
+
+		const usecase = new ArquiveNote();
+
+		const response = usecase.execute(noteId);
+
+		if (!response.success) {
+			return res.status(400).send("Não foi possivel arquivar a nota");
+		}
+
+		res.status(200).json({ message: response.message, data: response.data });
+	}
+
+	delete(req: Request, res: Response) {
+		const { noteId } = req.params;
+
+		const usecase = new DeleteNote();
+
+		const response = usecase.execute(noteId);
+
+		if (!response.success) {
+			return res.status(400).send("Não foi possivel deletar a nota");
 		}
 
 		res.status(200).json({ message: response.message, data: response.data });

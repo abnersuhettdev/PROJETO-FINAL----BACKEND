@@ -34,4 +34,32 @@ export class NotesRepository {
 		databaseNotes[noteIndex].update(dados);
 		return databaseNotes[noteIndex];
 	}
+
+	arquiveNote(noteId: string) {
+		const noteIndex = databaseNotes.findIndex(
+			(note) => note.toJson().id === noteId
+		);
+
+		if (noteIndex === -1) {
+			throw new Error("Nota não encontrada");
+		}
+
+		databaseNotes[noteIndex].toggleArquived();
+
+		return databaseNotes[noteIndex];
+	}
+
+	deleteNote(noteId: string) {
+		const noteIndex = databaseNotes.findIndex(
+			(note) => note.toJson().id === noteId
+		);
+
+		if (noteIndex === -1) {
+			throw new Error("Nota não encontrada");
+		}
+
+		const deletedNote = databaseNotes.splice(noteIndex, 1);
+
+		return deletedNote[0];
+	}
 }

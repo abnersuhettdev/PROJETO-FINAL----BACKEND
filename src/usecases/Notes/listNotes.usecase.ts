@@ -39,7 +39,7 @@ export class ListNotes {
 
 		return {
 			success: true,
-			message: "Nota cadastrada com sucesso",
+			message: "Listagem feita com sucesso",
 			data: authorList,
 		};
 	}
