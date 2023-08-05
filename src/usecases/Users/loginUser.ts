@@ -1,4 +1,4 @@
-import { UserRepository } from '../../repositories';
+import { UserRepository } from "../../repositories";
 
 export type LoginDTO = {
 	email: string;
@@ -8,7 +8,7 @@ export type LoginDTO = {
 type LoginUserResponse = {
 	success: boolean;
 	message: string;
-	data?: string;
+	data?: { id: string; name: string };
 };
 
 export class LoginUser {
@@ -20,14 +20,14 @@ export class LoginUser {
 		if (!searchUser) {
 			return {
 				success: false,
-				message: 'Senha e/ou email incorretos!',
+				message: "Senha e/ou email incorretos!",
 				data: searchUser,
 			};
 		}
 
 		return {
 			success: true,
-			message: 'Credenciais corretas!',
+			message: "Credenciais corretas!",
 			data: searchUser,
 		};
 	}

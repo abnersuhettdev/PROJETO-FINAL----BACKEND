@@ -1,6 +1,6 @@
-import { databaseUsers } from '../../database';
-import { User } from '../../models';
-import { LoginDTO, UserDTO } from '../../usecases';
+import { databaseUsers } from "../../database";
+import { User } from "../../models";
+import { LoginDTO, UserDTO } from "../../usecases";
 
 export class UserRepository {
 	listUsers() {
@@ -19,12 +19,11 @@ export class UserRepository {
 	findUserByCredentials(dados: LoginDTO) {
 		const user = databaseUsers.find(
 			(i) =>
-				i.toJson().email === dados.email &&
-				i.toJson().password === dados.password
+				i.toJson().email === dados.email && i.toJson().password === dados.password
 		);
 
 		if (!user) return;
 
-		return user.toJson().id;
+		return { id: user.toJson().id, name: user.toJson().name };
 	}
 }
