@@ -9,7 +9,6 @@ type RetornoListNote = {
 
 export type FilterNote = {
 	title?: string;
-	description?: string;
 	arquived?: boolean;
 };
 
@@ -22,12 +21,6 @@ export class ListNotes {
 		if (filters?.title) {
 			authorList = authorList.filter((note) =>
 				note.toJson().title.includes(filters.title!)
-			);
-		}
-
-		if (filters?.description) {
-			authorList = authorList.filter((note) =>
-				note.toJson().description?.includes(filters.description!)
 			);
 		}
 
