@@ -8,11 +8,11 @@ export class NotesController {
 	list(req: Request, res: Response) {
 		const { authorId } = req.params;
 
-		const { title, description, arquived } = req.query as FilterNote;
+		const { title, arquived } = req.query as FilterNote;
 
 		const usecase = new ListNotes();
 
-		const response = usecase.execute(authorId, { title, description, arquived });
+		const response = usecase.execute(authorId, { title, arquived });
 
 		if (!response.success) {
 			return res
