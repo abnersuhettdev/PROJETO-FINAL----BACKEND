@@ -24,7 +24,8 @@ export class NotesController {
 	}
 
 	create(req: Request, res: Response) {
-		const { title, description, authorId } = req.body;
+		const { authorId } = req.params;
+		const { title, description } = req.body;
 
 		const usecase = new CreateNote();
 
