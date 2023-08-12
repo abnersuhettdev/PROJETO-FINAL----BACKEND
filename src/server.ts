@@ -51,7 +51,7 @@ app.put(
 );
 
 app.put(
-	"/notes/arquived/:authorId/:noteId",
+	"/notes/:authorId/:noteId/arquive",
 	validateUserIsLogged,
 	validateNoteParams,
 	notesController.arquive
