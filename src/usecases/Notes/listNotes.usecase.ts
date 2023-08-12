@@ -1,4 +1,5 @@
 import { Note } from "../../models";
+import { UserRepository } from "../../repositories";
 import { NotesRepository } from "../../repositories/Notes/notes.repository";
 
 type RetornoListNote = {
@@ -15,6 +16,15 @@ export type FilterNote = {
 export class ListNotes {
 	execute(authorId: string, filters: FilterNote): RetornoListNote {
 		const repository = new NotesRepository();
+		const userRepository = new UserRepository();
+
+		const userExists = userRepository
+			.listUsers()
+			.find((user) => user.id === authorId);
+
+		if (!userExists) {
+			throw new Error("Usuario nao existe");
+		}
 
 		let authorList = repository.listNotes(authorId);
 
