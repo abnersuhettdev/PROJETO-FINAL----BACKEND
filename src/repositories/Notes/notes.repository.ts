@@ -5,9 +5,7 @@ import { NoteUpdate } from "../../usecases/Notes/updateNote";
 
 export class NotesRepository {
 	listNotes(authorId: string) {
-		const notes: Note[] = databaseNotes;
-
-		const authorNotes = notes.filter(
+		const authorNotes = databaseNotes.filter(
 			(note) => note.toJson().authorId === authorId
 		);
 
