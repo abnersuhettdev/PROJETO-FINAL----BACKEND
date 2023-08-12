@@ -49,7 +49,11 @@ export class NotesController {
 			return res.status(400).send("Não foi possivel atualizar a nota");
 		}
 
-		res.status(200).json({ message: response.message, data: response.data });
+		res.status(200).json({
+			message: response.message,
+			success: response.data,
+			data: response.data,
+		});
 	}
 
 	arquive(req: Request, res: Response) {
@@ -63,7 +67,11 @@ export class NotesController {
 			return res.status(400).send("Não foi possivel arquivar a nota");
 		}
 
-		res.status(200).json({ message: response.message, data: response.data });
+		res.status(200).json({
+			message: response.message,
+			success: response.data,
+			data: response.data,
+		});
 	}
 
 	delete(req: Request, res: Response) {
