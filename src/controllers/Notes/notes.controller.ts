@@ -1,18 +1,22 @@
 import { Request, Response } from "express";
-import { CreateNote, FilterNote, ListNotes } from "../../usecases";
-import { ArquiveNote } from "../../usecases/Notes/arquiveNote";
-import { DeleteNote } from "../../usecases/Notes/deleteNote";
-import { UpdateNote } from "../../usecases/Notes/updateNote";
+import {
+	ArchiveNote,
+	CreateNote,
+	DeleteNote,
+	FilterNote,
+	ListNotes,
+	UpdateNote,
+} from "../../usecases";
 
 export class NotesController {
 	list(req: Request, res: Response) {
 		const { authorId } = req.params;
 
-		const { title, arquived } = req.query as FilterNote;
+		const { title, archived } = req.query as FilterNote;
 
 		const usecase = new ListNotes();
 
-		const response = usecase.execute(authorId, { title, arquived });
+		const response = usecase.execute(authorId, { title, archived });
 
 		if (!response.success) {
 			return res
@@ -57,10 +61,10 @@ export class NotesController {
 		});
 	}
 
-	arquive(req: Request, res: Response) {
+	archive(req: Request, res: Response) {
 		const { noteId } = req.params;
 
-		const usecase = new ArquiveNote();
+		const usecase = new ArchiveNote();
 
 		const response = usecase.execute(noteId);
 

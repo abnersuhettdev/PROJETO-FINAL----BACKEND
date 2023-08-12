@@ -12,10 +12,10 @@ type LoginUserResponse = {
 };
 
 export class LoginUser {
-	execute(dados: LoginDTO): LoginUserResponse {
+	execute(data: LoginDTO): LoginUserResponse {
 		const repository = new UserRepository();
 
-		const searchUser = repository.findUserByCredentials(dados);
+		const searchUser = repository.findUserByCredentials(data);
 
 		if (!searchUser) {
 			return {

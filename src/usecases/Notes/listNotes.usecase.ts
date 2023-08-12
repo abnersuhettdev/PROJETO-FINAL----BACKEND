@@ -10,7 +10,7 @@ type RetornoListNote = {
 
 export type FilterNote = {
 	title?: string;
-	arquived?: boolean;
+	archived?: boolean;
 };
 
 export class ListNotes {
@@ -34,9 +34,9 @@ export class ListNotes {
 			);
 		}
 
-		if (filters?.arquived != undefined) {
+		if (filters?.archived != undefined) {
 			authorList = authorList.filter(
-				(note) => note.toJson().arquived == filters.arquived
+				(note) => note.toJson().archived == filters.archived
 			);
 		}
 

@@ -14,10 +14,10 @@ type RetornoCreate = {
 };
 
 export class CreateNote {
-	execute(dados: CreateNoteDTO): RetornoCreate {
+	execute(data: CreateNoteDTO): RetornoCreate {
 		const repository = new NotesRepository();
 
-		const newNote = repository.createNote(dados);
+		const newNote = repository.createNote(data);
 
 		return {
 			success: true,

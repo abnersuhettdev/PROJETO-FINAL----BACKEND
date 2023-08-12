@@ -1,4 +1,4 @@
-import { NoteUpdate } from "../../usecases/Notes/updateNote";
+import { NoteUpdate } from "../../usecases/Notes/updateNote.usecase";
 import { BaseClass } from "../BaseClass/baseClass.class";
 
 export type OutputNote = {
@@ -7,7 +7,7 @@ export type OutputNote = {
 	description: string | undefined;
 	authorId: string;
 	createdAt: string;
-	arquived: boolean;
+	archived: boolean;
 };
 
 export class Note extends BaseClass {
@@ -15,7 +15,7 @@ export class Note extends BaseClass {
 		private title: string,
 		private description: string | undefined,
 		private authorId: string,
-		private arquived: boolean = false,
+		private archived: boolean = false,
 		private createdAt: string = new Date().toLocaleDateString("pt-BR", {
 			month: "2-digit",
 			day: "2-digit",
@@ -31,7 +31,7 @@ export class Note extends BaseClass {
 			title: this.title,
 			description: this.description,
 			createdAt: this.createdAt,
-			arquived: this.arquived,
+			archived: this.archived,
 			authorId: this.authorId,
 		};
 	}
@@ -46,7 +46,7 @@ export class Note extends BaseClass {
 		}
 	}
 
-	toggleArquived() {
-		this.arquived = !this.arquived;
+	toggleArchived() {
+		this.archived = !this.archived;
 	}
 }

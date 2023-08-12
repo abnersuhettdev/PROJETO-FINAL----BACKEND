@@ -1,7 +1,6 @@
 import { databaseNotes } from "../../database";
 import { Note } from "../../models";
-import { CreateNoteDTO } from "../../usecases";
-import { NoteUpdate } from "../../usecases/Notes/updateNote";
+import { CreateNoteDTO, NoteUpdate } from "../../usecases";
 
 export class NotesRepository {
 	listNotes(authorId: string) {
@@ -12,28 +11,28 @@ export class NotesRepository {
 		return authorNotes;
 	}
 
-	createNote(dados: CreateNoteDTO) {
-		const note = new Note(dados.title, dados.description, dados.authorId);
+	createNote(data: CreateNoteDTO) {
+		const note = new Note(data.title, data.description, data.authorId);
 
 		databaseNotes.push(note);
 
 		return note;
 	}
 
-	updateNote(dados: NoteUpdate): Note {
+	updateNote(data: NoteUpdate): Note {
 		const noteIndex = databaseNotes.findIndex(
-			(note) => note.toJson().id === dados.noteId
+			(note) => note.toJson().id === data.noteId
 		);
 
 		if (noteIndex === -1) {
 			throw new Error("Nota não encontrada");
 		}
 
-		databaseNotes[noteIndex].update(dados);
+		databaseNotes[noteIndex].update(data);
 		return databaseNotes[noteIndex];
 	}
 
-	arquiveNote(noteId: string) {
+	archiveNote(noteId: string) {
 		const noteIndex = databaseNotes.findIndex(
 			(note) => note.toJson().id === noteId
 		);
@@ -42,7 +41,7 @@ export class NotesRepository {
 			throw new Error("Nota não encontrada");
 		}
 
-		databaseNotes[noteIndex].toggleArquived();
+		databaseNotes[noteIndex].toggleArchived();
 
 		return databaseNotes[noteIndex];
 	}

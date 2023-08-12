@@ -11,7 +11,7 @@ export function validateDataUser(
 	if (!user.email || !user.name || !user.password) {
 		return res
 			.status(400)
-			.json({ message: "Insira os dados para cadastrar o usúario." });
+			.json({ message: "Insira os data para cadastrar o usúario." });
 	}
 
 	if (!user.email.includes("@") || !user.email.includes(".com")) {

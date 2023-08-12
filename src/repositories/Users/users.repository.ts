@@ -9,17 +9,17 @@ export class UserRepository {
 		return users.map((user) => user.toJson());
 	}
 
-	createUser(dados: UserDTO) {
-		const user = new User(dados.name, dados.email, dados.password);
+	createUser(data: UserDTO) {
+		const user = new User(data.name, data.email, data.password);
 		databaseUsers.push(user);
 
 		return user.toJson();
 	}
 
-	findUserByCredentials(dados: LoginDTO) {
+	findUserByCredentials(data: LoginDTO) {
 		const user = databaseUsers.find(
 			(i) =>
-				i.toJson().email === dados.email && i.toJson().password === dados.password
+				i.toJson().email === data.email && i.toJson().password === data.password
 		);
 
 		if (!user) return;

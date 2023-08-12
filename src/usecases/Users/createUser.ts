@@ -13,12 +13,12 @@ export type RetornoCreate = {
 };
 
 export class CreateUser {
-	execute(dados: UserDTO): RetornoCreate {
+	execute(data: UserDTO): RetornoCreate {
 		const repository = new UserRepository();
 
 		const userExists = repository
 			.listUsers()
-			.some((user) => user.email === dados.email);
+			.some((user) => user.email === data.email);
 
 		if (userExists) {
 			return {
@@ -27,7 +27,7 @@ export class CreateUser {
 			};
 		}
 
-		const userCreated = repository.createUser(dados);
+		const userCreated = repository.createUser(data);
 
 		return {
 			success: true,

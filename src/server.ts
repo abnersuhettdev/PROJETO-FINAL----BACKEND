@@ -6,11 +6,11 @@ import { NotesController, UserController } from "./controllers";
 import {
 	validateDataNote,
 	validateDataUser,
+	validateNoteParams,
+	validateUpdateNote,
 	validateUserIsLogged,
 	validateUserLogin,
 } from "./middlewares";
-import { validateNoteParams } from "./middlewares/Notes/validateNoteExists";
-import { validateUpdateNote } from "./middlewares/Notes/validateNoteParams";
 
 const app = express();
 
@@ -22,16 +22,12 @@ app.listen(process.env.PORT, () => {
 	console.log("Servidor rodando na porta ", process.env.PORT);
 });
 
-// controllers
 const userController = new UserController();
+const notesController = new NotesController();
 
-// rotas
 app.get("/", (req, res) => res.send({ message: "OK" }));
 app.post("/users/signup", validateDataUser, userController.create);
 app.post("/users/signin", validateUserLogin, userController.signin);
-
-// CRUD
-const notesController = new NotesController();
 
 app.get("/notes/:authorId", validateUserIsLogged, notesController.list);
 
@@ -51,10 +47,10 @@ app.put(
 );
 
 app.put(
-	"/notes/:authorId/:noteId/arquive",
+	"/notes/:authorId/:noteId/archive",
 	validateUserIsLogged,
 	validateNoteParams,
-	notesController.arquive
+	notesController.archive
 );
 
 app.delete(

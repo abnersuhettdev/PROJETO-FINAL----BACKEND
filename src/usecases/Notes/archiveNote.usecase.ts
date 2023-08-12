@@ -1,22 +1,22 @@
 import { Note } from "../../models";
 import { NotesRepository } from "../../repositories/Notes/notes.repository";
 
-type RetornoArquiveNote = {
+type RetornoArchiveNote = {
 	success: boolean;
 	message: string;
 	data?: Note;
 };
 
-export class ArquiveNote {
-	execute(noteId: string): RetornoArquiveNote {
+export class ArchiveNote {
+	execute(noteId: string): RetornoArchiveNote {
 		const repository = new NotesRepository();
 
-		const arquivedNote = repository.arquiveNote(noteId);
+		const archivedNote = repository.archiveNote(noteId);
 
 		return {
 			success: true,
 			message: "Nota arquivada com sucesso",
-			data: arquivedNote,
+			data: archivedNote,
 		};
 	}
 }
