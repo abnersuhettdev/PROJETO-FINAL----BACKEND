@@ -1,4 +1,4 @@
-import { Note } from "../../models";
+import { OutputNote } from "../../models";
 import { NotesRepository } from "../../repositories/Notes/notes.repository";
 
 export type CreateNoteDTO = {
@@ -10,7 +10,7 @@ export type CreateNoteDTO = {
 type RetornoCreate = {
 	success: boolean;
 	message: string;
-	data?: Note;
+	data?: OutputNote;
 };
 
 export class CreateNote {
@@ -22,7 +22,7 @@ export class CreateNote {
 		return {
 			success: true,
 			message: "Nota cadastrada com sucesso",
-			data: newNote,
+			data: newNote.toJson(),
 		};
 	}
 }
