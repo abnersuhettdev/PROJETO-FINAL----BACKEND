@@ -6,6 +6,7 @@ export type OutputNote = {
 	title: string;
 	description: string | undefined;
 	authorId: string;
+	createdAt: string;
 	arquived: boolean;
 };
 
@@ -14,7 +15,12 @@ export class Note extends BaseClass {
 		private title: string,
 		private description: string | undefined,
 		private authorId: string,
-		private arquived: boolean = false
+		private arquived: boolean = false,
+		private createdAt: string = new Date().toLocaleDateString("pt-BR", {
+			month: "2-digit",
+			day: "2-digit",
+			year: "numeric",
+		})
 	) {
 		super();
 	}
@@ -24,6 +30,7 @@ export class Note extends BaseClass {
 			id: this.id,
 			title: this.title,
 			description: this.description,
+			createdAt: this.createdAt,
 			arquived: this.arquived,
 			authorId: this.authorId,
 		};
