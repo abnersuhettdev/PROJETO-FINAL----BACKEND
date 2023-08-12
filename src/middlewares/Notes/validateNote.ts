@@ -11,11 +11,11 @@ export function validateDataNote(
 		return res.status(400).json("Insira o titulo e a descrição");
 	}
 
-	if (title.length <= 3) {
+	if (title.length < 3) {
 		return res.status(400).json("Insira no minimo 3 caracteres no título");
 	}
 
-	if (description.length <= 3) {
+	if (description.length < 3) {
 		return res.status(400).json("Insira no minimo 3 caracteres na descrição");
 	}
 
