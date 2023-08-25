@@ -12,23 +12,22 @@ type LoginUserResponse = {
 };
 
 export class LoginUser {
-	execute(data: LoginDTO): LoginUserResponse {
+	async execute(data: LoginDTO): Promise<LoginUserResponse> {
 		const repository = new UserRepository();
 
-		const searchUser = repository.findUserByCredentials(data);
+		const searchUser = await repository.findUserByCredentials(data);
 
-		if (!searchUser) {
+		if (!searchUser || searchUser?.toJson().password !== data.password) {
 			return {
 				success: false,
 				message: "Senha e/ou email incorretos!",
-				data: searchUser,
 			};
 		}
 
 		return {
 			success: true,
 			message: "Credenciais corretas!",
-			data: searchUser,
+			data: searchUser.toJson(),
 		};
 	}
 }

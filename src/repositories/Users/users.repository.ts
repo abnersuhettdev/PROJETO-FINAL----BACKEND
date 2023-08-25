@@ -1,29 +1,44 @@
-import { databaseUsers } from "../../database";
+import { UsersEntity } from "../../database/entities/users.entity";
+import { pgHelper } from "../../database/pg-helper";
 import { User } from "../../models";
 import { LoginDTO, UserDTO } from "../../usecases";
 
 export class UserRepository {
-	listUsers() {
-		const users: User[] = databaseUsers;
+	constructor(private _manager = pgHelper.client.manager) {}
 
-		return users.map((user) => user.toJson());
+	private mapUserDb(user: UsersEntity): User {
+		return User.init(user.id, user.name, user.email, user.password);
 	}
 
-	createUser(data: UserDTO) {
-		const user = new User(data.name, data.email, data.password);
-		databaseUsers.push(user);
+	async listUsers() {
+		const users: UsersEntity[] = await this._manager.find(UsersEntity);
 
-		return user.toJson();
+		return users.map(this.mapUserDb);
 	}
 
-	findUserByCredentials(data: LoginDTO) {
-		const user = databaseUsers.find(
-			(i) =>
-				i.toJson().email === data.email && i.toJson().password === data.password
-		);
+	async createUser(data: UserDTO) {
+		const user = this._manager.create<UsersEntity>(UsersEntity, data);
+
+		await this._manager.save(user);
+
+		return this.mapUserDb(user);
+	}
+
+	async verifyUserExists(email: string) {
+		const userExists = await this._manager.exists(UsersEntity, {
+			where: { email: email },
+		});
+
+		return userExists;
+	}
+
+	async findUserByCredentials(data: LoginDTO) {
+		const user = await this._manager.findOneBy(UsersEntity, {
+			email: data.email,
+		});
 
 		if (!user) return;
 
-		return { id: user.toJson().id, name: user.toJson().name };
+		return this.mapUserDb(user);
 	}
 }

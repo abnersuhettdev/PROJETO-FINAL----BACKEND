@@ -1,9 +1,11 @@
-import { databaseNotes } from "../../database";
+import { pgHelper } from "../../database/pg-helper";
 import { Note } from "../../models";
 import { CreateNoteDTO, NoteUpdate } from "../../usecases";
 
 export class NotesRepository {
-	listNotes(authorId: string) {
+	constructor(private _manager = pgHelper.client.manager) {}
+
+	async listNotes(authorId: string) {
 		const authorNotes = databaseNotes.filter(
 			(note) => note.toJson().authorId === authorId
 		);

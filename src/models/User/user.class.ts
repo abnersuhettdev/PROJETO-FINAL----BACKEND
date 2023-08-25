@@ -1,4 +1,4 @@
-import { BaseClass } from '../BaseClass/baseClass.class';
+import { BaseClass } from "../BaseClass/baseClass.class";
 
 export class User extends BaseClass {
 	constructor(
@@ -7,6 +7,14 @@ export class User extends BaseClass {
 		private password: string
 	) {
 		super();
+	}
+
+	static init(id: string, name: string, email: string, password: string) {
+		const user = new User(name, email, password);
+
+		user.id = id;
+
+		return user;
 	}
 
 	toJson() {

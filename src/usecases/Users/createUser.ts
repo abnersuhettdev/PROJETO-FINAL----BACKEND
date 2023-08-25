@@ -13,12 +13,10 @@ export type RetornoCreate = {
 };
 
 export class CreateUser {
-	execute(data: UserDTO): RetornoCreate {
+	async execute(data: UserDTO): Promise<RetornoCreate> {
 		const repository = new UserRepository();
 
-		const userExists = repository
-			.listUsers()
-			.some((user) => user.email === data.email);
+		const userExists = await repository.verifyUserExists(data.email);
 
 		if (userExists) {
 			return {
@@ -27,12 +25,12 @@ export class CreateUser {
 			};
 		}
 
-		const userCreated = repository.createUser(data);
+		const userCreated = await repository.createUser(data);
 
 		return {
 			success: true,
 			message: "Usuário cadastrado com sucesso",
-			data: userCreated,
+			data: userCreated.toJson(),
 		};
 	}
 }
