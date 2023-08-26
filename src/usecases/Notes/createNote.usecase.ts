@@ -14,10 +14,10 @@ type RetornoCreate = {
 };
 
 export class CreateNote {
-	execute(data: CreateNoteDTO): RetornoCreate {
+	async execute(data: CreateNoteDTO) {
 		const repository = new NotesRepository();
 
-		const newNote = repository.createNote(data);
+		const newNote = await repository.createNote(data);
 
 		return {
 			success: true,

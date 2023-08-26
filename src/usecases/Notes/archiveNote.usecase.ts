@@ -8,10 +8,10 @@ type RetornoArchiveNote = {
 };
 
 export class ArchiveNote {
-	execute(noteId: string): RetornoArchiveNote {
+	async execute(noteId: string) {
 		const repository = new NotesRepository();
 
-		const archivedNote = repository.archiveNote(noteId);
+		const archivedNote = await repository.archiveNote(noteId);
 
 		return {
 			success: true,

@@ -14,10 +14,10 @@ export type NoteUpdate = {
 };
 
 export class UpdateNote {
-	execute(note: NoteUpdate, authorId: string): RetornoUpdateNote {
+	async execute(note: NoteUpdate, authorId: string) {
 		const repository = new NotesRepository();
 
-		const updatedNote = repository.updateNote(note);
+		const updatedNote = await repository.updateNote(note);
 
 		return {
 			success: true,

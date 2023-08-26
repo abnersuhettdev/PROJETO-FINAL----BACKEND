@@ -8,10 +8,10 @@ type RetornoDeleteNote = {
 };
 
 export class DeleteNote {
-	execute(noteId: string): RetornoDeleteNote {
+	async execute(noteId: string) {
 		const repository = new NotesRepository();
 
-		const deletedNote = repository.deleteNote(noteId);
+		const deletedNote = await repository.deleteNote(noteId);
 
 		return {
 			success: true,
