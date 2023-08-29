@@ -25,6 +25,7 @@
 	"scripts": {
 		"dev": "tsnd --respawn --transpile-only ./src/server.ts",
 		"build": "npx tsc",
+		"postbuild": "npm run migration:prod",
 		"start": "node ./dist/server.js",
 		"migration:create": "yarn typeorm migration:create ./src/database/migrations/NomeMigration",
 		"migration:run": "yarn typeorm-ts-node-commonjs migration:run -d dist/database/typeorm.js",
