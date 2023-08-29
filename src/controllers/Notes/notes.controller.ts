@@ -9,14 +9,14 @@ import {
 } from "../../usecases";
 
 export class NotesController {
-	list(req: Request, res: Response) {
+	async list(req: Request, res: Response) {
 		const { authorId } = req.params;
 
 		const { title, archived } = req.query as FilterNote;
 
 		const usecase = new ListNotes();
 
-		const response = usecase.execute(authorId, { title, archived });
+		const response = await usecase.execute(authorId, { title, archived });
 
 		if (!response.success) {
 			return res
