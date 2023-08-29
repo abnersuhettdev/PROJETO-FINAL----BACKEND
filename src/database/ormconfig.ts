@@ -7,6 +7,7 @@ const configProd: DataSourceOptions = {
 	type: "postgres",
 	url: process.env.DATABASE_URL,
 	logging: false,
+	ssl: true,
 	migrations: ["./migrations/*.js"],
 	entities: ["./entities/*.entity.js"],
 };
