@@ -27,13 +27,13 @@ export class NotesController {
 		return res.status(200).json(response);
 	}
 
-	create(req: Request, res: Response) {
+	async create(req: Request, res: Response) {
 		const { authorId } = req.params;
 		const { title, description } = req.body;
 
 		const usecase = new CreateNote();
 
-		const response = usecase.execute({ title, description, authorId });
+		const response = await usecase.execute({ title, description, authorId });
 
 		if (!response.success) {
 			return res.status(400).send("Não foi possivel criar a nota");
@@ -42,13 +42,16 @@ export class NotesController {
 		return res.status(201).json({ data: response });
 	}
 
-	update(req: Request, res: Response) {
+	async update(req: Request, res: Response) {
 		const { title, description } = req.body;
 		const { authorId, noteId } = req.params;
 
 		const usecase = new UpdateNote();
 
-		const response = usecase.execute({ title, description, noteId }, authorId);
+		const response = await usecase.execute(
+			{ title, description, noteId },
+			authorId
+		);
 
 		if (!response.success) {
 			return res.status(400).send("Não foi possivel atualizar a nota");
@@ -61,12 +64,12 @@ export class NotesController {
 		});
 	}
 
-	archive(req: Request, res: Response) {
+	async archive(req: Request, res: Response) {
 		const { noteId } = req.params;
 
 		const usecase = new ArchiveNote();
 
-		const response = usecase.execute(noteId);
+		const response = await usecase.execute(noteId);
 
 		if (!response.success) {
 			return res.status(400).send("Não foi possivel arquivar a nota");
@@ -79,12 +82,12 @@ export class NotesController {
 		});
 	}
 
-	delete(req: Request, res: Response) {
+	async delete(req: Request, res: Response) {
 		const { noteId } = req.params;
 
 		const usecase = new DeleteNote();
 
-		const response = usecase.execute(noteId);
+		const response = await usecase.execute(noteId);
 
 		if (!response.success) {
 			return res.status(400).send("Não foi possivel deletar a nota");
