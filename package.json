@@ -10,7 +10,8 @@
 		"pg": "^8.11.3",
 		"reflect-metadata": "^0.1.13",
 		"typeorm": "^0.3.17",
-		"uuid": "^9.0.0"
+		"uuid": "^9.0.0",
+		"typescript": "^5.2.2"
 	},
 	"devDependencies": {
 		"@types/cors": "^2.8.13",
