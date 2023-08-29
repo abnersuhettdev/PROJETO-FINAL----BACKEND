@@ -30,6 +30,6 @@
 		"migration:create": "yarn typeorm migration:create ./src/database/migrations/NomeMigration",
 		"migration:run": "yarn typeorm-ts-node-commonjs migration:run -d dist/database/typeorm.js",
 		"migration:revert": "yarn typeorm-ts-node-commonjs migration:revert -d src/database/typeorm.js",
-		"migration:prod": "cross-env NODE_ENV=production yarn typeorm migration:run -d dist/database/typeorm.js"
+		"migration:prod": " yarn typeorm migration:run -d dist/database/typeorm.js"
 	}
 }
