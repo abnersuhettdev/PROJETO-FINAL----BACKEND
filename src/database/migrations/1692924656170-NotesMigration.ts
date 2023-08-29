@@ -33,7 +33,7 @@ export class NotesMigration1692924656170 implements MigrationInterface {
 					},
 					{
 						name: "author_id",
-						type: "varchar",
+						type: "uuid",
 						isNullable: false,
 					},
 				],
