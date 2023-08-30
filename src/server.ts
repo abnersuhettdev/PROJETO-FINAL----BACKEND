@@ -3,6 +3,7 @@ import "dotenv/config";
 import express from "express";
 import { NotesController, UserController } from "./controllers";
 
+import { pgHelper } from "./database/pg-helper";
 import {
 	validateDataNote,
 	validateDataUser,
@@ -18,9 +19,13 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cors());
 
-app.listen(process.env.PORT, () => {
-	console.log("Servidor rodando na porta ", process.env.PORT);
-});
+async function start() {
+	await pgHelper.connect();
+	app.listen(process.env.PORT, () => {
+		console.log("Servidor rodando na porta ", process.env.PORT);
+	});
+}
+start();
 
 const userController = new UserController();
 const notesController = new NotesController();

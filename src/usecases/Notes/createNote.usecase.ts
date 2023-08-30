@@ -14,7 +14,7 @@ type RetornoCreate = {
 };
 
 export class CreateNote {
-	async execute(data: CreateNoteDTO) {
+	async execute(data: CreateNoteDTO): Promise<RetornoCreate> {
 		const repository = new NotesRepository();
 
 		const newNote = await repository.createNote(data);

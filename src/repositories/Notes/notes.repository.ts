@@ -1,35 +1,40 @@
+import { Like } from "typeorm";
 import { NotesEntity } from "../../database/entities/notes.entity";
 import { pgHelper } from "../../database/pg-helper";
 import { Note } from "../../models";
-import { CreateNoteDTO, NoteUpdate } from "../../usecases";
+import { CreateNoteDTO, FilterNote, NoteUpdate } from "../../usecases";
 
 export class NotesRepository {
 	constructor(private _manager = pgHelper.client.manager) {}
 
-	async listNotes(authorId: string) {
+	async listNotes(authorId: string, filters: FilterNote) {
+		const isFilters: any = {};
+
+		if (filters.title) {
+			isFilters.title = Like(`%${filters.title}%`);
+		}
+
+		if (filters.archived) {
+			isFilters.archived = filters.archived;
+		}
+
 		const authorNotes = await this._manager.find(NotesEntity, {
 			where: {
 				authorId,
+				...isFilters,
 			},
 		});
 
-		// const authorNotes = databaseNotes.filter(
-		// 	(note) => note.toJson().authorId === authorId
-		// );
-
-		return authorNotes;
+		return authorNotes.map(this.entityToModel);
 	}
 
 	async createNote(data: CreateNoteDTO) {
-		const noteDB = this._manager.create(NotesEntity, data);
+		const noteDB = this._manager.create<NotesEntity>(NotesEntity, data);
+		noteDB.authorId = data.authorId;
 
 		await this._manager.save(NotesEntity, noteDB);
 
 		const note = this.entityToModel(noteDB as NotesEntity);
-
-		// const note = new Note(data.title, data.description, data.authorId);
-
-		// databaseNotes.push(note);
 
 		return note;
 	}
@@ -42,14 +47,6 @@ export class NotesRepository {
 			{ id: noteId },
 			{ title, description }
 		);
-		// const noteIndex = databaseNotes.findIndex(
-		// 	(note) => note.toJson().id === data.noteId
-		// );
-		// if (noteIndex === -1) {
-		// 	throw new Error("Nota não encontrada");
-		// }
-		// databaseNotes[noteIndex].update(data);
-		// return databaseNotes[noteIndex];
 
 		const updatedNote = this.entityToModel(
 			updatedNoteDB as unknown as NotesEntity
@@ -61,40 +58,25 @@ export class NotesRepository {
 	async archiveNote(noteId: string) {
 		const noteDB = await this._manager.findOneBy(NotesEntity, { id: noteId });
 
-		this.entityToModel(noteDB as NotesEntity).toggleArchived();
+		if (!noteDB) {
+			throw new Error("Nota inexistente");
+		}
 
-		// const noteIndex = databaseNotes.findIndex(
-		// 	(note) => note.toJson().id === noteId
-		// );
+		const archivedNote = this.entityToModel(noteDB);
+		archivedNote.toggleArchived();
 
-		// if (noteIndex === -1) {
-		// 	throw new Error("Nota não encontrada");
-		// }
-
-		// databaseNotes[noteIndex].toggleArchived();
-
-		// return databaseNotes[noteIndex];
+		await this._manager.update(NotesEntity, noteId, {
+			archived: archivedNote.toJson().archived,
+		});
 	}
 
 	async deleteNote(noteId: string) {
-		const deletedNote = await this._manager.delete(NotesEntity, {
-			where: {
-				id: noteId,
-			},
-		});
-
-		// const noteIndex = databaseNotes.findIndex(
-		// 	(note) => note.toJson().id === noteId
-		// );
-		// if (noteIndex === -1) {
-		// 	throw new Error("Nota não encontrada");
-		// }
-		// const deletedNote = databaseNotes.splice(noteIndex, 1);
+		const deletedNote = await this._manager.delete(NotesEntity, { id: noteId });
 		return deletedNote;
 	}
 
 	private entityToModel(dataDB: NotesEntity): Note {
-		const note = new Note(dataDB.title, dataDB.description, dataDB.authorId);
+		const note = Note.mapDB(dataDB);
 
 		return note;
 	}

@@ -16,31 +16,14 @@ export type FilterNote = {
 };
 
 export class ListNotes {
-	async execute(authorId: string, filters: FilterNote) {
+	async execute(
+		authorId: string,
+		filters: FilterNote
+	): Promise<RetornoListNote> {
 		const repository = new NotesRepository();
 		const userRepository = new UserRepository();
 
-		const userExists = await userRepository
-			.listUsers()
-			.find((user) => user.id === authorId);
-
-		if (!userExists) {
-			throw new Error("Usuario nao existe");
-		}
-
-		let authorList = repository.listNotes(authorId);
-
-		if (filters?.title) {
-			authorList = authorList.filter((note) =>
-				note.toJson().title.includes(filters.title!)
-			);
-		}
-
-		if (filters?.archived != undefined) {
-			authorList = authorList.filter(
-				(note) => note.toJson().archived == filters.archived
-			);
-		}
+		const authorList = await repository.listNotes(authorId, filters);
 
 		return {
 			success: true,

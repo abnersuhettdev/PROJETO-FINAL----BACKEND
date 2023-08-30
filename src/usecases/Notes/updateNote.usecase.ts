@@ -14,7 +14,7 @@ export type NoteUpdate = {
 };
 
 export class UpdateNote {
-	async execute(note: NoteUpdate, authorId: string) {
+	async execute(note: NoteUpdate, authorId: string): Promise<RetornoUpdateNote> {
 		const repository = new NotesRepository();
 
 		const updatedNote = await repository.updateNote(note);

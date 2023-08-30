@@ -10,7 +10,7 @@ export class NotesEntity extends BaseEntity {
 	@Column()
 	description!: string;
 
-	@Column()
+	@Column({ name: "author_id" })
 	authorId!: string;
 
 	@ManyToOne(() => UsersEntity, (u) => u.notes)
@@ -19,9 +19,6 @@ export class NotesEntity extends BaseEntity {
 		referencedColumnName: "id",
 	})
 	author!: UsersEntity;
-
-	@Column()
-	password!: string;
 
 	@Column()
 	archived!: boolean;

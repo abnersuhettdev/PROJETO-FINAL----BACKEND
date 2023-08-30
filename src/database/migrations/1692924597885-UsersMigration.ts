@@ -9,6 +9,8 @@ export class UsersMigration1692924597885 implements MigrationInterface {
 					{
 						name: "id",
 						type: "uuid",
+						generationStrategy: "uuid",
+						isGenerated: true,
 						isNullable: false,
 						isPrimary: true,
 					},
@@ -30,6 +32,7 @@ export class UsersMigration1692924597885 implements MigrationInterface {
 					},
 					{
 						name: "created_at",
+						default: "now()",
 						type: "timestamp",
 						isNullable: false,
 					},

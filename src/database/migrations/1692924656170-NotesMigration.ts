@@ -10,6 +10,8 @@ export class NotesMigration1692924656170 implements MigrationInterface {
 						name: "id",
 						type: "uuid",
 						isNullable: false,
+						generationStrategy: "uuid",
+						isGenerated: true,
 						isPrimary: true,
 					},
 					{
@@ -25,10 +27,12 @@ export class NotesMigration1692924656170 implements MigrationInterface {
 					{
 						name: "archived",
 						type: "boolean",
+						default: false,
 					},
 					{
 						name: "created_at",
 						type: "timestamp",
+						default: "now()",
 						isNullable: false,
 					},
 					{

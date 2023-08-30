@@ -46,6 +46,15 @@ export class Note extends BaseClass {
 		}
 	}
 
+	static mapDB(data: Omit<OutputNote, "createdAt">) {
+		const note = new Note(data.title, data.description, data.authorId);
+
+		note.id = data.id;
+		note.archived = data.archived;
+
+		return note;
+	}
+
 	toggleArchived() {
 		this.archived = !this.archived;
 	}
