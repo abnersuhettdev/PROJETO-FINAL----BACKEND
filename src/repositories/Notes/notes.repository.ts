@@ -52,6 +52,8 @@ export class NotesRepository {
 			updatedNoteDB as unknown as NotesEntity
 		);
 
+		updatedNote.update({ title, description });
+
 		return updatedNote.toJson();
 	}
 
