@@ -68,10 +68,21 @@ export class NotesRepository {
 		await this._manager.update(NotesEntity, noteId, {
 			archived: archivedNote.toJson().archived,
 		});
+
+		return archivedNote;
 	}
 
 	async deleteNote(noteId: string) {
-		const deletedNote = await this._manager.delete(NotesEntity, { id: noteId });
+		const noteDB = await this._manager.findOneBy(NotesEntity, { id: noteId });
+
+		if (!noteDB) {
+			throw new Error("Nota inexistente");
+		}
+
+		const deletedNote = this.entityToModel(noteDB);
+
+		await this._manager.delete(NotesEntity, { id: noteId });
+
 		return deletedNote;
 	}
 

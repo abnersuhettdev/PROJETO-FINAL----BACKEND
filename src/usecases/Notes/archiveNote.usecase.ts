@@ -1,8 +1,10 @@
+import { Note } from "../../models";
 import { NotesRepository } from "../../repositories/Notes/notes.repository";
 
 type RetornoArchiveNote = {
 	success: boolean;
 	message: string;
+	data?: Note;
 };
 
 export class ArchiveNote {
@@ -14,6 +16,7 @@ export class ArchiveNote {
 		return {
 			success: true,
 			message: "Nota arquivada com sucesso",
+			data: archivedNote,
 		};
 	}
 }

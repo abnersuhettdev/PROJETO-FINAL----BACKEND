@@ -78,6 +78,7 @@ export class NotesController {
 		res.status(200).json({
 			message: response.message,
 			success: response.success,
+			data: response.data,
 		});
 	}
 
@@ -92,6 +93,6 @@ export class NotesController {
 			return res.status(400).send("Não foi possivel deletar a nota");
 		}
 
-		res.status(200).json({ message: response.message });
+		res.status(200).json({ message: response.message, data: response.data });
 	}
 }

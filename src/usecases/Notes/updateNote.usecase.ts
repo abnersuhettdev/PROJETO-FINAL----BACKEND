@@ -1,10 +1,10 @@
-import { OutputNote } from "../../models";
+import { Note } from "../../models";
 import { NotesRepository } from "../../repositories/Notes/notes.repository";
 
 type RetornoUpdateNote = {
 	success: boolean;
 	message: string;
-	data?: OutputNote;
+	data?: Note;
 };
 
 export type NoteUpdate = {
@@ -22,7 +22,7 @@ export class UpdateNote {
 		return {
 			success: true,
 			message: "Nota atualizada com sucesso",
-			data: updatedNote.toJson(),
+			data: updatedNote,
 		};
 	}
 }
