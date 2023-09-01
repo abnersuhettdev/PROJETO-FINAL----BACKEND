@@ -48,13 +48,14 @@ export class NotesRepository {
 			throw new Error("Nota inexistente");
 		}
 
+		const updatedNote = this.entityToModel(noteDB);
+		updatedNote.update({ title, description });
+
 		await this._manager.update(
 			NotesEntity,
 			{ id: noteId },
 			{ title, description }
 		);
-
-		const updatedNote = this.entityToModel(noteDB);
 
 		return updatedNote.toJson();
 	}
