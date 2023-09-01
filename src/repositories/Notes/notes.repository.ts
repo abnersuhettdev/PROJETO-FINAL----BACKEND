@@ -42,17 +42,19 @@ export class NotesRepository {
 	async updateNote(data: NoteUpdate) {
 		const { noteId, description, title } = data;
 
-		const updatedNoteDB = await this._manager.update(
+		const noteDB = await this._manager.findOneBy(NotesEntity, { id: noteId });
+
+		if (!noteDB) {
+			throw new Error("Nota inexistente");
+		}
+
+		await this._manager.update(
 			NotesEntity,
 			{ id: noteId },
 			{ title, description }
 		);
 
-		const updatedNote = this.entityToModel(
-			updatedNoteDB as unknown as NotesEntity
-		);
-
-		updatedNote.update({ title, description });
+		const updatedNote = this.entityToModel(noteDB);
 
 		return updatedNote.toJson();
 	}
