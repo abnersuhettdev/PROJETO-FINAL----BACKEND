@@ -52,7 +52,7 @@ export class NotesRepository {
 			updatedNoteDB as unknown as NotesEntity
 		);
 
-		return updatedNote;
+		return updatedNote.toJson();
 	}
 
 	async archiveNote(noteId: string) {

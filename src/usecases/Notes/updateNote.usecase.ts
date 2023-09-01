@@ -1,10 +1,10 @@
-import { Note } from "../../models";
+import { OutputNote } from "../../models";
 import { NotesRepository } from "../../repositories/Notes/notes.repository";
 
 type RetornoUpdateNote = {
 	success: boolean;
 	message: string;
-	data?: Note;
+	data?: OutputNote;
 };
 
 export type NoteUpdate = {
