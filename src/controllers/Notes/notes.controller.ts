@@ -44,14 +44,11 @@ export class NotesController {
 
 	async update(req: Request, res: Response) {
 		const { title, description } = req.body;
-		const { authorId, noteId } = req.params;
+		const { noteId } = req.params;
 
 		const usecase = new UpdateNote();
 
-		const response = await usecase.execute(
-			{ title, description, noteId },
-			authorId
-		);
+		const response = await usecase.execute({ title, description, noteId });
 
 		if (!response.success) {
 			return res.status(400).send("Não foi possivel atualizar a nota");
